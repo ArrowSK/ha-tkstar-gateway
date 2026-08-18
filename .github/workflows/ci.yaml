@@ -17,6 +17,7 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version-file: tkstar_gateway/go.mod
+          cache-dependency-path: tkstar_gateway/go.sum
       - name: Validate repository
         run: |
           python3 -m pip install --disable-pip-version-check pyyaml
