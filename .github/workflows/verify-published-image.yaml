@@ -1,0 +1,19 @@
+name: Verify published image
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify public multi-architecture image anonymously
+        run: |
+          docker buildx imagetools inspect ghcr.io/arrowsk/ha-tkstar-gateway:0.1.0 > /tmp/image.txt
+          cat /tmp/image.txt
+          grep -q 'linux/amd64' /tmp/image.txt
+          grep -q 'linux/arm64' /tmp/image.txt
