@@ -1,0 +1,6 @@
+TKSTAR Gateway
+Copyright 2026 ArrowSK
+
+Protocol handling was bootstrapped from the MIT-licensed gps2mqtt project by Shannon Wynter. See THIRD_PARTY_LICENSES.md.
+
+TKSTAR, WINNES and other product names are trademarks of their respective owners. This project is independent and is not affiliated with or endorsed by TKSTAR, WINNES, Home Assistant, Traccar, Google or OpenStreetMap.
