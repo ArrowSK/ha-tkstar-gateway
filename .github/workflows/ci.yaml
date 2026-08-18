@@ -17,18 +17,14 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version-file: tkstar_gateway/go.mod
-          cache-dependency-path: tkstar_gateway/go.mod
+          cache-dependency-path: tkstar_gateway/go.sum
       - name: Validate repository
         run: |
           python3 -m pip install --disable-pip-version-check pyyaml
           python3 tests/validate_repository.py
-      - name: Resolve modules for validation
+      - name: Download modules
         working-directory: tkstar_gateway
-        run: |
-          go mod tidy
-          echo '--- GO.SUM BEGIN ---'
-          cat go.sum
-          echo '--- GO.SUM END ---'
+        run: go mod download
       - name: Test
         working-directory: tkstar_gateway
         run: go test ./...
