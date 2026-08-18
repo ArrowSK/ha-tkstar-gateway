@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible TKSTAR Gateway problem
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include tracker IDs, SIM/ICCID values, exact private coordinates, API keys or unsanitised packet captures."
+  - type: input
+    id: version
+    attributes:
+      label: Version
+    validations:
+      required: true
+  - type: input
+    id: protocol
+    attributes:
+      label: Protocol/model
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+    validations:
+      required: true
