@@ -1,0 +1,49 @@
+name: Validate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: tkstar_gateway/go.mod
+      - name: Validate repository
+        run: |
+          python3 -m pip install --disable-pip-version-check pyyaml
+          python3 tests/validate_repository.py
+      - name: Download modules
+        working-directory: tkstar_gateway
+        run: go mod download
+      - name: Test
+        working-directory: tkstar_gateway
+        run: go test ./...
+      - name: Vet
+        working-directory: tkstar_gateway
+        run: go vet ./...
+      - name: Build runtime
+        working-directory: tkstar_gateway
+        run: go build ./cmd/tkstar-gateway
+      - name: Runtime self-test
+        working-directory: tkstar_gateway
+        run: ./tkstar-gateway --self-test
+      - name: Validate AppArmor profile syntax
+        run: |
+          if ! command -v apparmor_parser >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y apparmor-utils
+          fi
+          sudo apparmor_parser -Q tkstar_gateway/apparmor.txt
+      - name: Build container
+        run: docker build -t tkstar-gateway:test tkstar_gateway
+      - name: Smoke-test container
+        run: docker run --rm tkstar-gateway:test /usr/local/bin/tkstar-gateway --self-test
