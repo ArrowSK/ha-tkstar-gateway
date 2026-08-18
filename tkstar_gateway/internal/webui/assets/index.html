@@ -1,1 +1,86 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TKSTAR Gateway</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="style.css"></head><body><header><div><h1>TKSTAR Gateway</h1><p id="status">Starting…</p></div><button id="pair">Pair new tracker (10 min)</button></header><nav><button data-tab="monitor" class="active">Monitor</button><button data-tab="history">Tracking playback</button><button data-tab="stats">Statistics</button><button data-tab="alarms">Alarm overview</button></nav><main><aside><div class="filters"><span id="counts">All (0)</span></div><div id="devices"></div></aside><section><div id="monitor" class="tab active"><div id="map"></div><div id="empty">No position yet. Pair a tracker, then point it at the Gateway.</div></div><div id="history" class="tab"><div class="toolbar"><select id="historyPeriod"><option value="24">24 hours</option><option value="168">7 days</option><option value="720">30 days</option><option value="4320">180 days</option></select><button id="loadHistory">Load route</button><input id="playback" type="range" min="0" max="0" value="0"></div><div id="historyMap"></div></div><div id="stats" class="tab"><div class="toolbar"><select id="statsPeriod"><option value="24">24 hours</option><option value="168">7 days</option><option value="720">30 days</option></select><button id="loadStats">Refresh</button></div><div id="statsCards"></div></div><div id="alarms" class="tab"><div id="alarmList"></div></div></section></main><dialog id="editDialog"><form method="dialog"><h2>Tracker details</h2><label>Name<input id="fName"></label><label>Model<input id="fModel"></label><label>SIM<input id="fSim"></label><label>ICCID<input id="fIccid"></label><label>License plate<input id="fPlate"></label><label>Icon<input id="fIcon" placeholder="mdi:car"></label><label class="check"><input id="fPrivacy" type="checkbox"> Privacy mode</label><div class="actions"><button value="cancel">Cancel</button><button id="saveDevice" value="default">Save</button></div></form></dialog><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TKSTAR Gateway</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>TKSTAR Gateway</h1>
+    <p id="status">Starting…</p>
+  </div>
+  <button id="pair">Pair new tracker (10 min)</button>
+</header>
+<nav>
+  <button data-tab="monitor" class="active">Monitor</button>
+  <button data-tab="history">Tracking playback</button>
+  <button data-tab="stats">Statistics</button>
+  <button data-tab="alarms">Alarm overview</button>
+</nav>
+<main>
+  <aside>
+    <div class="filters">
+      <button data-filter="all" class="active">All <span id="countAll">0</span></button>
+      <button data-filter="active">Active <span id="countActive">0</span></button>
+      <button data-filter="inactive">Inactive <span id="countInactive">0</span></button>
+    </div>
+    <div id="devices"></div>
+  </aside>
+  <section>
+    <div id="monitor" class="tab active">
+      <div id="map"></div>
+      <div id="empty">No position yet. Pair a tracker, then point it at the Gateway.</div>
+    </div>
+    <div id="history" class="tab">
+      <div class="toolbar">
+        <select id="historyPeriod">
+          <option value="24">24 hours</option>
+          <option value="168">7 days</option>
+          <option value="720">30 days</option>
+          <option value="4320">180 days</option>
+        </select>
+        <button id="loadHistory">Load route</button>
+        <input id="playback" type="range" min="0" max="0" value="0">
+      </div>
+      <div id="historyMap"></div>
+    </div>
+    <div id="stats" class="tab">
+      <div class="toolbar">
+        <select id="statsPeriod">
+          <option value="24">24 hours</option>
+          <option value="168">7 days</option>
+          <option value="720">30 days</option>
+        </select>
+        <button id="loadStats">Refresh</button>
+      </div>
+      <div id="statsCards"></div>
+    </div>
+    <div id="alarms" class="tab"><div id="alarmList"></div></div>
+  </section>
+</main>
+<dialog id="editDialog">
+  <form method="dialog">
+    <h2>Tracker details</h2>
+    <label>Name<input id="fName"></label>
+    <label>Model<input id="fModel"></label>
+    <label>SIM<input id="fSim"></label>
+    <label>ICCID<input id="fIccid"></label>
+    <label>License plate<input id="fPlate"></label>
+    <label>Icon<input id="fIcon" placeholder="mdi:car"></label>
+    <label>Overspeed alert (km/h)<input id="fOverspeed" type="number" min="0" max="400" step="1" placeholder="0 = disabled"></label>
+    <label class="check"><input id="fFilterLBS" type="checkbox"> Filter LBS positions from map/history</label>
+    <label class="check"><input id="fPrivacy" type="checkbox"> Privacy mode</label>
+    <div class="actions">
+      <button value="cancel">Cancel</button>
+      <button id="saveDevice" value="default">Save</button>
+    </div>
+  </form>
+</dialog>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
